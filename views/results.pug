@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p These are the results for "#{query}"
+  ol
+  each link, name in results
+    li
+      a(href=link, target="_blank")= name
