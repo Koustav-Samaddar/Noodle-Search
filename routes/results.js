@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  req.session.query = req.body.searchbar;
+  req.session.query = req.body.query;
   req.session.results = { "Repo Page": "https://github.com/Koustav-Samaddar/Noodle-Search" };
 
   res.redirect('/search/results');
