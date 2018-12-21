@@ -1,5 +1,11 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  script(src="/javascripts/validate.js")
+  div.grid-container
+    div.search
+      h1 Noodle
+      p Welcome to Noodle Search
+      form(action="/search", onsubmit="return validateSearch()", method="post").searchbar
+        input(type="search", name="query", placeholder="Search the web").searchfield
+        button(type="submit").searchbutton Go
