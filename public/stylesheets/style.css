@@ -7,6 +7,9 @@ input[type=search]{
 }
 
 body {
+  background-color: rgb(71, 71, 73);
+  color: rgb(151, 151, 151);
+  
   padding: 25px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -19,10 +22,27 @@ a {
   display: -ms-grid;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
+  grid-template-areas: 
+    ". app ."
+    ". app ."
+    ".  .  .";
+}
+
+@media only screen and (max-width: 600px) {
+  .grid-container {
+    display: -ms-grid;
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr;
+    grid-template-areas: 
+      ". app ."
+      ". app ."
+      ".  .  .";
+  }
 }
 
 .search {
   text-align: center;
+  grid-area: app;
 }
 
 .search h1 {
@@ -35,7 +55,7 @@ a {
 }
 
 .searchbar {
-  min-height: 40px;
+  min-height: 32px;
   margin: 5vw 0 2vw 0;
   display: -ms-grid;
   display: grid;
@@ -44,19 +64,26 @@ a {
 
 .searchbutton {
   font-size: 16px;
-  background-color: rgb(22, 115, 255);
+  background-color: rgb(119, 119, 119);
   color: aliceblue;
 
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
-  border-color: rgb(22, 115, 255);
+  border-color: rgb(119, 119, 119);
   border-width: 1px;
+}
+
+.searchbutton:hover {
+  background-color: rgb(151, 151, 151);
 }
 
 .searchfield {
   font-size: 16px;
   padding-left: 16px;
   min-height: 1vh;
+
+  color: white;
+  background-color: rgb(151, 151, 151);
 
   border-top-left-radius: 24px;
   border-bottom-left-radius: 24px;
