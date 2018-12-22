@@ -1,25 +1,26 @@
 
 import re
+import sys
+import json
 import yaml
+import getopt
 
 from pprint import pprint
-from urllib.request import urlretrieve, install_opener, build_opener, Request, urlopen
+from urllib.request import Request, urlopen
 
 
-def main():
-	search = 'wormhole'
-	query = f"https://www.google.com/search?q={search}&oq={search}&gl=us&hl=en&num=100"
-	req = Request(query, headers={'User-Agent': 'Mozilla/5.0'})
+def main(query, num=100, debug=False):
+	url = f"https://www.google.com/search?q={query}&oq={query}&gl=us&hl=en&num={num}"
+	req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
 	res = urlopen(req).read().decode().replace('><', '>\n<')
 
 	res = re.sub(r'<head>.*</head>', '', res, flags=re.S)
 	res = res.split('\n')[3:]
 	res = [ x + '\n' for x in res ]
 
-	with open('results.html', 'w') as f:
-		f.writelines(res)
-
-	print("Finished downloading the html file")
+	if debug:
+		with open('results.html', 'w') as f:
+			f.writelines(res)
 
 	start_flag = None
 	re_groups = []
@@ -34,8 +35,9 @@ def main():
 
 	re_groups = [ ''.join(y.strip() for y in x) + '\n' for x in re_groups ]
 
-	with open('scratch.txt', 'w') as f:
-		f.writelines(re_groups)
+	if debug:
+		with open('scratch.txt', 'w') as f:
+			f.writelines(re_groups)
 
 	p = r'.*<a[^>]*>(.*)</a>.*<cite>(.*)</cite>.*'
 	re_finds = []
@@ -43,15 +45,43 @@ def main():
 	for x in map(lambda x: list(map(list, re.findall(p, x))), re_groups):
 		re_finds.extend(x)
 
-	re_finds = [ [ x[0].strip().replace('\n', ''), x[1].strip().replace('\n', '') ] for x in re_finds if '...' not in x[1] ]
+	re_finds = [ [ x[0].strip().replace('\n', ''), x[1].strip().replace('\n', '') ] 
+				for x in re_finds 
+				if '...' not in x[1] ]
 
-	pprint(re_finds)
+	print(json.dumps(re_finds))
 
-	with open('dump.yaml', 'w') as f:
-		yaml.dump(re_finds, f, default_flow_style=False)
-
-	print("Finished parsing the html file")
+	if debug:
+		with open('dump.yaml', 'w') as f:
+			yaml.dump(re_finds, f, default_flow_style=False)
 
 
 if __name__ == '__main__':
-	main()
+	# Defining parameter options
+	short_flags = "dn:q:"
+	long_flags = [ "debug", "num=", "query=" ]
+	raw_args = sys.argv[1:]
+
+	# Not catching getopt.err on purpose, since I can't think of a better error message yet
+	opts, f_args = getopt.getopt(raw_args, short_flags, long_flags)
+	pprint(dict(opts))
+
+	# Initialising the two parameters to main
+	num, query, debug = None, None, False
+
+	for arg, val in opts:
+		if arg in ('--num', '-n'):
+			num = val
+		elif arg in ('--query', '-q'):
+			query = val
+		elif arg in ('--debug', '-d'):
+			debug=True
+		
+	# Check that query has been passed since it has no default
+	if query is None:
+		raise ValueError('Missing non-optional argument --query or -q')
+
+	if num is None:
+		main(query)
+	else:
+		main(query, num)

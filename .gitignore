@@ -2,3 +2,4 @@ node_modules
 dump.yaml
 results.html
 scratch.txt
+.vscode/launch.json
