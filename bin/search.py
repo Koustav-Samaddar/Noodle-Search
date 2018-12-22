@@ -27,11 +27,9 @@ def main(query, num=100, debug=False):
 	for i in range(len(res)):
 		if res[i][:3] == '<h3':
 			start_flag = i
-			print("Start triggered")
 		elif res[i][-8:] == '</cite>\n' and start_flag is not None:
 			re_groups.append(res[start_flag: i + 1])
 			start_flag = None
-			print("End triggered")
 
 	re_groups = [ ''.join(y.strip() for y in x) + '\n' for x in re_groups ]
 
@@ -64,7 +62,6 @@ if __name__ == '__main__':
 
 	# Not catching getopt.err on purpose, since I can't think of a better error message yet
 	opts, f_args = getopt.getopt(raw_args, short_flags, long_flags)
-	pprint(dict(opts))
 
 	# Initialising the two parameters to main
 	num, query, debug = None, None, False
