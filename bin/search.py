@@ -43,10 +43,10 @@ def main(query, num=100, debug=False):
 	for x in map(lambda x: list(map(list, re.findall(p, x))), re_groups):
 		re_finds.extend(x)
 
-	re_finds = [ [ x[0].strip().replace('\n', ''), 
-					re.sub(r'(\s+|</?b>)', '', x[1].strip()) ] 
+	re_finds = { x[0].strip().replace('\n', ''):
+					re.sub(r'(\s+|</?b>)', '', x[1].strip())
 				for x in re_finds 
-				if '...' not in x[1] ]
+				if '...' not in x[1] }
 
 	print(json.dumps(re_finds))
 

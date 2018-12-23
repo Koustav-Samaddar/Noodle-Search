@@ -1,9 +1,10 @@
 extends layout
 
 block content
-  h1= title
+  h1
+    a(href='/').homeLink= title
   p These are the results for "#{query}"
   ol.results
     each link, name in results
       li.result
-        a(href=link, target="_blank").resultLink= name
+        a(href=link, target="_blank").resultLink !{name}
