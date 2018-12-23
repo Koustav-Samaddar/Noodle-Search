@@ -24,18 +24,16 @@ function getSearchResults(query, num=100) {
 };
 
 // For debugging
-// 
 // function main() {
 // 	/**
 // 	 * This function serves as an example of how to use the getSearchResults function
 // 	 */
 // 	let response = getSearchResults('whales');
 // 	response.then((result) => {
-// 				// console.log(result);
-// 				return result;
+// 				console.log(result);
 // 			}, (err) => {console.error(err)});
 // };
 // main();
 
-// Module Export
+// Exporting getSearchResults
 module.exports = getSearchResults;
