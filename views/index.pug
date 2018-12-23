@@ -9,3 +9,4 @@ block content
       form(action="/search", onsubmit="return validateSearch()", method="post").searchbar
         input(type="search", name="query", placeholder="Search the web").searchfield
         button(type="submit").searchbutton Go
+      div(hidden)#loader
