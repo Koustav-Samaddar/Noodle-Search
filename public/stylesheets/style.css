@@ -28,7 +28,19 @@ a {
     ".  .  .";
 }
 
-@media only screen and (max-width: 600px) {
+@media screen and (max-width: 992px) {
+  .grid-container {
+    display: -ms-grid;
+    display: grid;
+    grid-template-columns: 1fr 7fr 1fr;
+    grid-template-areas: 
+      ". app ."
+      ". app ."
+      ".  .  .";
+  }
+}
+
+@media screen and (max-width: 600px) {
   .grid-container {
     display: -ms-grid;
     display: grid;
@@ -101,6 +113,18 @@ a {
 
   margin: 5px;
   padding: 10px;
+}
+
+@media screen and (max-width: 992px) {
+  .results {
+    max-width: 75%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .results {
+    max-width: 100%;
+  }
 }
 
 .result {

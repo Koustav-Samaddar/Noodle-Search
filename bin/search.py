@@ -46,7 +46,7 @@ def main(query, num=100, debug=False):
 	re_finds = { x[0].strip().replace('\n', ''):
 					re.sub(r'(\s+|</?b>)', '', x[1].strip())
 				for x in re_finds 
-				if '...' not in x[1] }
+				if '...' not in x[1] and re.match(r'^https?://', x[1]) is not None }
 
 	print(json.dumps(re_finds))
 
