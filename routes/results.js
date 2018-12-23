@@ -8,7 +8,8 @@ router.post('/', function(req, res, next) {
   const searchPromise = gsearch(req.body.query)
         .then((result) => {
           req.session.results = result;
-          console.log(result);
+          console.log(req.body.query);
+          // console.log(result);
           res.redirect('/search/results');
         }, (error) => {console.error(error)});  
 });
