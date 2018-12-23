@@ -3,3 +3,4 @@ dump.yaml
 results.html
 scratch.txt
 .vscode/launch.json
+.clocignore
