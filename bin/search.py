@@ -67,15 +67,23 @@ if __name__ == '__main__':
 	# Initialising the two parameters to main
 	num, query, debug = None, None, False
 
+	# Assigning and sanitizing inputs from args
 	for arg, val in opts:
 		if arg in ('--num', '-n'):
-			num = val
+			try:
+				_ = int(val)
+			except TypeError:
+				raise ValueError("--num or -n must have integer value")
+			else:
+				num = val
+
 		elif arg in ('--query', '-q'):
-			query = val
+			query = re.sub(r'\s+', '+', val)
+
 		elif arg in ('--debug', '-d'):
 			debug=True
-		
-	# Check that query has been passed since it has no default
+
+	# Check that query has been passed since it is required
 	if query is None:
 		raise ValueError('Missing non-optional argument --query or -q')
 
